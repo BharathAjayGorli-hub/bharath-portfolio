@@ -186,9 +186,12 @@ section{position:relative;z-index:2}
 footer{text-align:center;padding:1.8rem;font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--dim);border-top:1px solid var(--border);position:relative;z-index:2;background:rgba(8,12,22,0.9);letter-spacing:0.06em}
 footer span{color:var(--sky)}
 @keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.rv{opacity:0;transform:translateY(26px);transition:opacity 0.65s ease,transform 0.65s ease}
-.rv.in{opacity:1;transform:translateY(0)}
-.rv.d1{transition-delay:0.08s}.rv.d2{transition-delay:0.16s}.rv.d3{transition-delay:0.24s}.rv.d4{transition-delay:0.32s}
+@media(prefers-reduced-motion:reduce){.htag,.hname,.hrole,.hdesc,.hbtns,.hsoc,.hstats,.hpwrap{animation:none!important;opacity:1!important;transform:none!important}}
+/* content visible by default — JS adds .js-ok to body which enables animations */
+.rv{opacity:1;transform:none}
+.js-ok .rv{opacity:0;transform:translateY(26px);transition:opacity 0.65s ease,transform 0.65s ease}
+.js-ok .rv.in{opacity:1;transform:translateY(0)}
+.js-ok .rv.d1{transition-delay:0.08s}.js-ok .rv.d2{transition-delay:0.16s}.js-ok .rv.d3{transition-delay:0.24s}.js-ok .rv.d4{transition-delay:0.32s}
 @media(max-width:960px){
   nav{padding:0 1.5rem}.navl{display:none}
   #hero{padding:6.5rem 1.5rem 3rem}
@@ -528,7 +531,8 @@ function frame(){
 window.addEventListener('resize',()=>{rsz();init()});
 rsz();init();frame();
 const rvs=document.querySelectorAll('.rv');
-const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:0.07,rootMargin:'0px 0px -20px 0px'});
+document.body.classList.add('js-ok');
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:0.05,rootMargin:'0px 0px -10px 0px'});
 rvs.forEach(el=>ro.observe(el));
 const bo=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.pbarf').forEach((b,i)=>setTimeout(()=>b.style.transform=`scaleX(${b.dataset.p})`,i*120));bo.unobserve(e.target)}})},{threshold:0.3});
 document.querySelectorAll('.pbars').forEach(el=>bo.observe(el));
