@@ -38,7 +38,10 @@
     <div class="hpwrap">
       <div class="pring">
         ${badges}
-        <div class="pav"><div class="pavtx">${DATA.initials}</div></div>
+        ${DATA.profilePhoto
+          ? `<img class="pav-img" src="${DATA.profilePhoto}" alt="${DATA.name.first} ${DATA.name.last}"/>`
+          : `<div class="pav"><div class="pavtx">${DATA.initials}</div></div>`
+        }
       </div>
     </div>
   </div>`;
